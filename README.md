@@ -10,12 +10,16 @@ Build status:
 | master | @todo Add travis build status |
 | dev    | @todo Add travis build status |
 
-## Running the Daemon
+## Running the CLI
 > Requires Python 3.
 
 To run the deamon simply run `python3 cli/odincli.py [shell|packages]`. The arguments are:
 
 - `shell`: Runs the shell.
 - `packages`: Manages components. Does nothing for now.
+
+## Using the Shell
+
+Type `help` or `?` to get the list of commands that can be used. Type `quit` to exit the CLI.
 
 [arbitrary case-insensitive reference text]: https://github.com/Albert-Prime/Odin-Daemon

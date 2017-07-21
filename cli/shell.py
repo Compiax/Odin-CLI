@@ -1,6 +1,13 @@
-from cmd import Cmd
-from additionalShellFunctions import *
+###########################################################
+#   File Details
+###########################################################
+#   The CLI shell. Uses function handler libraries as well
+#   as the var library to handle all the requests
+#   Created by Jason van Hattum - --/07/2017
+#   Updates: modularisation - Kyle Erwin 21/07/2017
 
+from cmd import Cmd
+from Shell_Function_Handlers.createVarHandler import createVarHandler
 from builtins import print
 
 
@@ -9,8 +16,9 @@ class OdinShell(Cmd):
         """Creates a variable."""
         print ("'var' called with arguments {}".format(repr(args)))
         args = args.split()
-        if validateCreateVarInput(args, True):
-            print()
+        handler = createVarHandler(args)
+        if handler.validateArguments(True):
+            print
 
 
     def do_set(self, args):

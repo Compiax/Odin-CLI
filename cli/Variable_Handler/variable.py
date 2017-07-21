@@ -11,7 +11,7 @@
 import json
 
 
-class variable():
+class Variable():
     name = ""
     dimensions = []
     values = []

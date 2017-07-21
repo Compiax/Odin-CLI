@@ -8,7 +8,7 @@
 from printColors import *
 
 
-class createVarHandler():
+class CreateVarHandler():
     args = []
     def __init__(self, _args):
         self.args = _args
@@ -56,3 +56,39 @@ class createVarHandler():
             print(PrintColors.OKBLUE + "var [name] [dimensions] <flags>" + PrintColors.ENDC)
 
         return valid
+
+    ###########################################################
+    #   Get Methods
+    ###########################################################
+
+    def getName(self):
+        return self.args[0]
+
+    def getDimensions(self):
+        dimensions = []
+
+        index = 1
+        while index < len(self.args):
+            if not self.args[index].isdigit():
+                break
+            dimensions.append(self.args[index])
+            index += 1
+
+        return dimensions
+
+    def getRank(self):
+        dimensions = self.getDimensions()
+        return len(dimensions)
+
+    def getFlags(self):
+        index = 1
+        while index < len(self.args):
+            if not self.args[index].isdigit():
+                break
+            index += 1
+
+        flags = ""
+        while index < len(self.args):
+            flags += self.args[index]
+
+        return flags

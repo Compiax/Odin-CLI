@@ -1,9 +1,17 @@
 from cmd import Cmd
+from additionalShellFunctions import *
+
+from builtins import print
+
 
 class OdinShell(Cmd):
     def do_var(self, args):
         """Creates a variable."""
         print ("'var' called with arguments {}".format(repr(args)))
+        args = args.split()
+        if validateCreateVarInput(args, True):
+            print()
+
 
     def do_set(self, args):
         """Sets a variable."""

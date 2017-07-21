@@ -1,3 +1,11 @@
+###########################################################
+#   File Details
+###########################################################
+#   Allows for colors to be used when printing to the terminal.
+#   Such use case would be using red for a warning
+#   Created by Kyle Erwin - 19/07/2017
+
+
 class PrintColors:
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'

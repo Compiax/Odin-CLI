@@ -43,6 +43,7 @@ class OdinShell(Cmd):
     def do_set(self, args):
         """Sets a variable."""
         print ("'set' called with arguments {}".format(repr(args)))
+        print ("Need to implement with tree!!")
 
     def do_do(self, args):
         """Performs an operation."""

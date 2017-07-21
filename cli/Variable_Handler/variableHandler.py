@@ -46,5 +46,6 @@ class VariableHandler():
 
         return -1
 
-
-
+    def listVariables(self):
+        for var in self.list:
+            print (var)

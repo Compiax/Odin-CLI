@@ -11,6 +11,7 @@ from printColors import *
 class CreateVarHandler():
     args = []
     def __init__(self, _args):
+        _args = _args.split()
         self.args = _args
 
     ###########################################################
@@ -24,6 +25,10 @@ class CreateVarHandler():
         :return: bool
         """
         valid = True
+
+        # No arguments
+        if len(self.args) == 0:
+            return False
 
         # minimum length is 2
         if len(self.args) <= 1:

@@ -13,7 +13,9 @@ from builtins import print
 
 # Shell handlers
 from Shell_Function_Handlers.createVarHandler import *
+from Shell_Function_Handlers.delVarHandler import DelVarHandler
 from Shell_Function_Handlers.listVarHandler import *
+from Shell_Function_Handlers.setVarHandler import SetVarHandler
 
 # Variable handlers
 from Variable_Handler.variableHandler import *
@@ -39,11 +41,20 @@ class OdinShell(Cmd):
                 self.variables.addVariable(name, dimensions, rank, flags)
                 print(PrintColors.OKBLUE + "Variable " + name + " created" + PrintColors.ENDC)
 
-
     def do_set(self, args):
         """Sets a variable."""
         print ("'set' called with arguments {}".format(repr(args)))
-        print ("Need to implement with tree!!")
+        handler = SetVarHandler(args)
+
+        if handler.validateArguments(True):
+            name = handler.getName()
+
+            if self.variables.containsVariable(name):
+                variable = self.variables.getVariable(name)
+                variable.values = handler.inputValues(variable.dimensions)
+                print(PrintColors.OKBLUE + "Values set to variable " + name + PrintColors.ENDC)
+            else:
+                print(PrintColors.FAIL + "ERROR: No such variable exists" + PrintColors.ENDC)
 
     def do_do(self, args):
         """Performs an operation."""
@@ -54,11 +65,21 @@ class OdinShell(Cmd):
         print ("'execute' called with arguments {}".format(repr(args)))
 
     def do_listv(self, args):
-        """Executes the session."""
         handler = ListVarHandler(args)
 
         if handler.validateArguments(True):
             self.variables.listVariables()
+
+    def do_del(self, args):
+        handler = DelVarHandler(args)
+
+        if handler.validateArguments(True):
+            name = handler.getName()
+            if self.variables.containsVariable(name):
+                self.variables.deleteVariable(name)
+                print(PrintColors.OKBLUE + "Variable " + name + " deleted" + PrintColors.ENDC)
+            else:
+                print(PrintColors.FAIL + "ERROR: No such variable exists" + PrintColors.ENDC)
 
     def do_quit(self, args):
         """Quits the program."""

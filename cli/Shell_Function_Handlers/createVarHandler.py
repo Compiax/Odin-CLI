@@ -52,7 +52,7 @@ class CreateVarHandler():
                     break
                 index += 1
 
-            if str(self.args[len(self.args) - 1]) == "--save":
+            if str(self.args[len(self.args) - 1]) != "--save":
                 valid = False
 
         if errorMessage and not valid:
@@ -88,7 +88,7 @@ class CreateVarHandler():
     def getFlags(self):
         index = 1
         while index < len(self.args):
-            if not self.args[index].isdigit():
+            if str(self.args[index]).isalpha():
                 break
             index += 1
 

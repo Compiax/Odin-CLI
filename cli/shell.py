@@ -20,13 +20,18 @@ from Shell_Function_Handlers.setVarHandler import SetVarHandler
 # Variable handlers
 from Variable_Handler.variableHandler import *
 
+from session import Session
+
+import Operations
+
+
+
 
 class OdinShell(Cmd):
-    variables = VariableHandler()
+    session = Session()
 
     def do_var(self, args):
         """Creates a variable."""
-        # print ("'var' called with arguments {}".format(repr(args)))
         handler = CreateVarHandler(args)
 
         if handler.validateArguments(True):
@@ -35,30 +40,34 @@ class OdinShell(Cmd):
             flags = handler.getFlags()
             rank = handler.getRank()
 
-            if self.variables.containsVariable(name):
+            print(name)
+            if self.session.variables.containsVariable(name):
                 print(PrintColors.FAIL + "ERROR: Variable already exists" + PrintColors.ENDC)
             else:
-                self.variables.addVariable(name, dimensions, rank, flags)
+                self.session.variables.addVariable(name, dimensions, rank, flags)
                 print(PrintColors.OKBLUE + "Variable " + name + " created" + PrintColors.ENDC)
 
     def do_set(self, args):
         """Sets a variable."""
-        # print ("'set' called with arguments {}".format(repr(args)))
         handler = SetVarHandler(args)
 
         if handler.validateArguments(True):
             name = handler.getName()
 
-            if self.variables.containsVariable(name):
-                variable = self.variables.getVariable(name)
+            if self.session.variables.containsVariable(name):
+                variable = self.session.variables.getVariable(name)
                 variable.values = handler.inputValues(variable.dimensions)
                 print(PrintColors.OKBLUE + "Values set to variable " + name + PrintColors.ENDC)
             else:
                 print(PrintColors.FAIL + "ERROR: No such variable exists" + PrintColors.ENDC)
 
+    def do_p(self, args):
+        self.session.print()
+
+
     def do_do(self, args):
         """Performs an operation."""
-        print ("'do' called with arguments {}".format(repr(args)))
+        Operations.validate_arguments_and_add(self.session, args)
 
     def do_execute(self, args):
         """Executes the session."""

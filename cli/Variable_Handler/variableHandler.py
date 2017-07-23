@@ -9,7 +9,7 @@
 
 from Variable_Handler.variable import *
 
-class VariableHandler():
+class VariableHandler:
     list = []
 
     ###########################################################

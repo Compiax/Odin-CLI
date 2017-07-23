@@ -26,7 +26,7 @@ class OdinShell(Cmd):
 
     def do_var(self, args):
         """Creates a variable."""
-        print ("'var' called with arguments {}".format(repr(args)))
+        # print ("'var' called with arguments {}".format(repr(args)))
         handler = CreateVarHandler(args)
 
         if handler.validateArguments(True):
@@ -43,7 +43,7 @@ class OdinShell(Cmd):
 
     def do_set(self, args):
         """Sets a variable."""
-        print ("'set' called with arguments {}".format(repr(args)))
+        # print ("'set' called with arguments {}".format(repr(args)))
         handler = SetVarHandler(args)
 
         if handler.validateArguments(True):

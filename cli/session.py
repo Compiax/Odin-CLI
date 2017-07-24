@@ -8,14 +8,14 @@ from Variable_Handler.variableHandler import *
 
 class Session:
     """
-    A Session object will contain the variables and operations of the current session
+    A Session object will contain the variables and operations of the current session,
+    as well as the components that can be used.
     """
-    # variables = []
-    # operations = []
 
     def __init__(self):
         self.variables = VariableHandler()
         self.operations = []
+        self.components =[]
 
     def execute_session(self):
         """

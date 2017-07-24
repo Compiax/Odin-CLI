@@ -4,18 +4,17 @@
 #   Contains the definition and implementation of the Component object.
 #   Created by Jason van Hattum - 24/07/2017
 
-class Operation:
+class Component:
     """
-    A Session object encapsulates the details of an operation between variables
+    A Component object is a component of a computational flow, that can be used as an operation.
     """
 
-    def __init__(self, operation_name, operands, outputvar):
-        self.operation_name = operation_name        # Addition, Multiplication, Subtraction, Division
-        self.operands = operands              # List of operands from left to right
-        self.outputvar = outputvar
+    def __init__(self, component_name, num_operands):
+        self.component_name = component_name
+        self.num_operands = num_operands
 
     def print(self):
-        return "Operation: {} with operands {}, outputting to {}".format(self.operation_name, self.operands, self.outputvar)
+        return "Component: {} with {} operands.".format(self.component_name.upper(), self.num_operands)
 
     def __str__(self):
-        return "{} {} {}".format(self.operation_name.upper(), ' '.join(map(str,self.operands)), self.outputvar)
+        return self.component_name

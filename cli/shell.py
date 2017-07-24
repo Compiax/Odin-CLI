@@ -26,12 +26,16 @@ from Variable_Handler.variableHandler import *
 from session import Session
 
 import Operations
+import Components
 
 
 
 
 class OdinShell(Cmd):
+    
     session = Session()
+    session.components = Components.initialize_components()
+    print("> {}Loaded components: {}{}".format(PrintColors.OKBLUE,', '.join(map(str,session.components)),PrintColors.ENDC))
 
     ###########################################################
     #   Createing/setting vars

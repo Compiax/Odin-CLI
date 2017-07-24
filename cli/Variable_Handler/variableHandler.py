@@ -6,6 +6,7 @@
 #   NOTE - This class is only for housing data not getting it
 #   from the shell.
 #   Created by Kyle Erwin - 21/07/2017
+#   Updates: added a deleteAll function
 
 from Variable_Handler.variable import *
 
@@ -24,6 +25,10 @@ class VariableHandler():
             if var.name == varName:
                 self.list.remove(var)
                 break
+
+    def deleteAll(self):
+        del self.list[:]
+        self.list = []
 
     ###########################################################
     #   Other Methods
@@ -49,3 +54,6 @@ class VariableHandler():
     def listVariables(self):
         for var in self.list:
             print (var)
+
+    def isEmpty(self):
+        return len(self.list) == 0

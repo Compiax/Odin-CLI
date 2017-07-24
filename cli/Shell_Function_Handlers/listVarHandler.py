@@ -26,8 +26,7 @@ class ListVarHandler():
             valid = False
 
         if errorMessage and not valid:
-            print(PrintColors.FAIL + "Invalid input." + PrintColors.ENDC)
-            print("Correct Format as follows...")
+            print(PrintColors.FAIL + "ERROR: Invalid input." + PrintColors.ENDC)
             print(PrintColors.OKBLUE + "listv" + PrintColors.ENDC)
 
         return valid

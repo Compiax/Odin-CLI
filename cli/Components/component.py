@@ -1,8 +1,8 @@
 ###########################################################
 #   File Details
 ###########################################################
-#   Contains the definition and implementation of the Operation object.
-#   Created by Jason van Hattum - 23/07/2017
+#   Contains the definition and implementation of the Component object.
+#   Created by Jason van Hattum - 24/07/2017
 
 class Operation:
     """

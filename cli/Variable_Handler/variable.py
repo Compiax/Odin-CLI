@@ -35,7 +35,7 @@ class Variable():
         data["dimensions"] = self.dimensions
         data["values"] = self.values
         data["rank"] = self.rank
-        data["flags"] = self.flags
+        data["save"] = self.flags
         json_data = json.dumps(data)
         return  json_data
 

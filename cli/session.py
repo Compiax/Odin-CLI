@@ -17,10 +17,16 @@ class Session:
         self.variables = VariableHandler()
         self.operations = []
 
+    def execute_session(self):
+        """
+        Executes the session, sending all variables and operations to the Daemon
+        """
+       
+
     def print(self):
         print("Variables:")
-        for var in self.variables:
-            print("- {}".format(var))
+        for var in self.variables.list:
+            print("- {}".format(var.convertToJson()))
         print("Operations:")
         for op in self.operations:
             print("- {}".format(op))

@@ -40,7 +40,6 @@ class OdinShell(Cmd):
             flags = handler.getFlags()
             rank = handler.getRank()
 
-            print(name)
             if self.session.variables.containsVariable(name):
                 print(PrintColors.FAIL + "ERROR: Variable already exists" + PrintColors.ENDC)
             else:
@@ -64,14 +63,13 @@ class OdinShell(Cmd):
     def do_p(self, args):
         self.session.print()
 
-
     def do_do(self, args):
         """Performs an operation."""
         Operations.validate_arguments_and_add(self.session, args)
 
     def do_execute(self, args):
         """Executes the session."""
-        print ("'execute' called with arguments {}".format(repr(args)))
+        self.session.execute_session()
 
     def do_listv(self, args):
         handler = ListVarHandler(args)

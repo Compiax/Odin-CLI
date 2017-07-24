@@ -4,6 +4,7 @@
 #   Provides additional support to the shell for the deleting
 #   variable.
 #   Created by Kyle Erwin - 22/07/2017
+#   Updates: added del all (del *)
 from printColors import *
 
 class DelVarHandler():
@@ -26,12 +27,15 @@ class DelVarHandler():
             valid = False
 
         if not str(self.args[0]).isalpha():
-            valid = False
+            if str(self.args[0]) == "*":
+                valid = True
+            else:
+                valid = False
 
         if errorMessage and not valid:
-            print(PrintColors.FAIL + "Invalid input." + PrintColors.ENDC)
-            print("Correct Format as follows...")
+            print(PrintColors.FAIL + "ERROR: Invalid input." + PrintColors.ENDC)
             print(PrintColors.OKBLUE + "del [name]" + PrintColors.ENDC)
+            print(PrintColors.OKBLUE + "del *" + PrintColors.ENDC)
 
         return valid
 

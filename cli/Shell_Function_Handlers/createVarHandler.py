@@ -56,8 +56,7 @@ class CreateVarHandler():
                 valid = False
 
         if errorMessage and not valid:
-            print(PrintColors.FAIL + "Invalid input." + PrintColors.ENDC)
-            print("Correct Format as follows...")
+            print(PrintColors.FAIL + "ERROR: Invalid input." + PrintColors.ENDC)
             print(PrintColors.OKBLUE + "var [name] [dimensions] <flags>" + PrintColors.ENDC)
 
         return valid

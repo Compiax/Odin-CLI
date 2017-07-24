@@ -7,6 +7,8 @@
 #   Updates: modularisation - Kyle Erwin 21/07/2017
 #            implemented create variable
 #            added function to list variables
+#            added function to delete variable
+#            added function to export variable
 
 from cmd import Cmd
 from builtins import print
@@ -15,6 +17,7 @@ from builtins import print
 from Shell_Function_Handlers.createVarHandler import *
 from Shell_Function_Handlers.delVarHandler import DelVarHandler
 from Shell_Function_Handlers.listVarHandler import *
+from Shell_Function_Handlers.printVarHandler import PrintVarHandler
 from Shell_Function_Handlers.setVarHandler import SetVarHandler
 
 # Variable handlers
@@ -30,8 +33,15 @@ import Operations
 class OdinShell(Cmd):
     session = Session()
 
+    ###########################################################
+    #   Createing/setting vars
+    ###########################################################
+
     def do_var(self, args):
-        """Creates a variable."""
+        """
+        Creates a variable.
+        Usage: var [name] [dimensions] <flags>
+        """
         handler = CreateVarHandler(args)
 
         if handler.validateArguments(True):
@@ -47,7 +57,10 @@ class OdinShell(Cmd):
                 print(PrintColors.OKBLUE + "Variable " + name + " created" + PrintColors.ENDC)
 
     def do_set(self, args):
-        """Sets a variable."""
+        """
+        Sets the value of a variable.
+        Usage: set [variable]
+        """
         handler = SetVarHandler(args)
 
         if handler.validateArguments(True):
@@ -55,38 +68,89 @@ class OdinShell(Cmd):
 
             if self.session.variables.containsVariable(name):
                 variable = self.session.variables.getVariable(name)
-                variable.values = handler.inputValues(variable.dimensions)
+
+                if handler.isSetRandom():
+                    variable.values = handler.randomValues(variable.dimensions)
+                else:
+                    variable.values = handler.inputValues(variable.dimensions)
                 print(PrintColors.OKBLUE + "Values set to variable " + name + PrintColors.ENDC)
             else:
                 print(PrintColors.FAIL + "ERROR: No such variable exists" + PrintColors.ENDC)
 
     def do_p(self, args):
+        """
+        Prints EVERYTHING.
+        Usage: p
+        """
         self.session.print()
 
-    def do_do(self, args):
-        """Performs an operation."""
-        Operations.validate_arguments_and_add(self.session, args)
-
-    def do_execute(self, args):
-        """Executes the session."""
-        self.session.execute_session()
-
-    def do_listv(self, args):
-        handler = ListVarHandler(args)
-
-        if handler.validateArguments(True):
-            self.variables.listVariables()
-
+    ###########################################################
+    #   Deletes
+    ###########################################################
     def do_del(self, args):
+        """
+        Deletes a variable.
+        Usage: del [variable]
+        """
         handler = DelVarHandler(args)
 
         if handler.validateArguments(True):
             name = handler.getName()
-            if self.variables.containsVariable(name):
-                self.variables.deleteVariable(name)
+            if self.session.variables.containsVariable(name):
+                self.session.variables.deleteVariable(name)
                 print(PrintColors.OKBLUE + "Variable " + name + " deleted" + PrintColors.ENDC)
+            elif name == "*":
+                self.session.variables.deleteAll()
+                print(PrintColors.OKBLUE + "All variables deleted" + PrintColors.ENDC)
             else:
                 print(PrintColors.FAIL + "ERROR: No such variable exists" + PrintColors.ENDC)
+
+    ###########################################################
+    #   Perform actions
+    ###########################################################
+
+    def do_listv(self, args):
+        """
+        Lists all variables.
+        Usage: listv
+        """
+        handler = ListVarHandler(args)
+
+        if handler.validateArguments(True):
+            if self.session.variables.isEmpty():
+                print(PrintColors.OKBLUE + "No variables" + PrintColors.ENDC)
+            else:
+                self.session.variables.listVariables()
+
+    def do_print(self, args):
+        """
+        Prints the details of a variable. 
+        Usage: print [variable]
+        """
+        handler = PrintVarHandler(args)
+
+        if handler.validateArguments(True):
+            name = handler.getName()
+            if self.session.variables.containsVariable(name):
+                variable = self.session.variables.getVariable(name)
+                handler.printValues(variable.dimensions, variable.values)
+            else:
+                print(PrintColors.FAIL + "ERROR: No such variable exists" + PrintColors.ENDC)
+
+    ##########################################################
+    #   Write/reading files (export/import)
+    ###########################################################
+    def do_export(self, args):
+        """Exports the current variables to a file."""
+        print ("'execute' called with arguments {}".format(repr(args)))
+
+    def do_import(self, args):
+        """Imports the current variables from a file."""
+        print ("'execute' called with arguments {}".format(repr(args)))
+
+    ###########################################################
+    #   Quit
+    ###########################################################
 
     def do_quit(self, args):
         """Quits the program."""

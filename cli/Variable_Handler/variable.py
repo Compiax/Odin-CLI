@@ -32,8 +32,9 @@ class Variable():
     def convertToJson(self):
         data = {}
         data["name"] = self.name
-        data["dimensions"] = self.dimensions
-        data["values"] = self.values
+        data["dimensions"] = list(map(int, self.dimensions))
+        data["values"] = list(map(int, self.values))
+        print(data["values"])
         data["rank"] = self.rank
         data["save"] = self.flags
         json_data = json.dumps(data)

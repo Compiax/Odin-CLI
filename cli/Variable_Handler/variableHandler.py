@@ -27,6 +27,7 @@ class VariableHandler:
         count = 0;
         while count < numberOfPoints:
             varValues.append(0);
+            count += 1
 
         var = Variable(_varName, _varDimensions, varValues, _varRank, _varFlags)
         self.list.append(var)

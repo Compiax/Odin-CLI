@@ -17,7 +17,18 @@ class VariableHandler:
     #   Manipulation Methods
     ###########################################################
     def addVariable(self, _varName, _varDimensions, _varRank, _varFlags):
-        var = Variable(_varName, _varDimensions, [], _varRank, _varFlags)
+        numberOfPoints = 1
+
+        for dimension in _varDimensions:
+            numberOfPoints *= int(dimension)
+
+        varValues = [];
+
+        count = 0;
+        while count < numberOfPoints:
+            varValues.append(0);
+
+        var = Variable(_varName, _varDimensions, varValues, _varRank, _varFlags)
         self.list.append(var)
 
     def deleteVariable(self, varName):

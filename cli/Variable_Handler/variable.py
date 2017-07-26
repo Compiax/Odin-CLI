@@ -16,7 +16,7 @@ class Variable():
     dimensions = []
     values = []
     rank = 0
-    flags = ""
+    flags = 0
 
     def __init__(self, _name, _dimensions, _values, _rank, _flags):
         self.name = _name
@@ -34,9 +34,8 @@ class Variable():
         data["name"] = self.name
         data["dimensions"] = list(map(int, self.dimensions))
         data["values"] = list(map(int, self.values))
-        print(data["values"])
         data["rank"] = self.rank
-        data["save"] = self.flags
+        data["save"] = 0
         json_data = json.dumps(data)
         return  json_data
 

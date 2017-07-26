@@ -89,7 +89,6 @@ class Session:
         if len(json) > 0:
             json += '\n'  # Could also add some other separater between the variables and the commands
         json += ';'.join(map(str,self.operations))
-        print(len(self.operations))
         if len(self.operations) > 0:
             json += ';'
         return json

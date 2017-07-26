@@ -79,6 +79,9 @@ class SetVarHandler():
             while str(value).isalpha():
                 value =  input("Enter value for point " + str(point) + ": ")
 
+                if value == '':
+                    value = 0
+
                 if str(value).isalpha():
                     print(PrintColors.FAIL + "ERROR: Please enter numerical value" + PrintColors.ENDC)
 

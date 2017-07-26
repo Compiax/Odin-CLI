@@ -46,7 +46,7 @@ class VariableHandler:
 
     def getVariable(self, varName):
         for var in self.list:
-            if var.name == varName:
+            if var.name == varName or var == varName:
                 return var
 
         return -1

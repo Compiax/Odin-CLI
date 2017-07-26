@@ -7,12 +7,23 @@
 from Variable_Handler.variableHandler import *
 import socket
 from printColors import *
+import signal
+import sys
+from functools import partial
 
+quit_message = "QUIT"
+connectionDetails = {'hostname': 'localhost', 'port':8000}
+
+def handle_sigint(session,signal, frame):
+        print("Closing CLI..")
+        if (session.connected):
+            session.close()
+        sys.exit(0)
 class Session:
     """
     A Session object will contain the variables and operations of the current session,
     as well as the components that can be used.
-    """
+    """    
 
     def __init__(self):
         self.variables = VariableHandler()
@@ -25,9 +36,10 @@ class Session:
         else:
             print("{}unable to connect - running in offline mode{}".format(PrintColors.FAIL, PrintColors.ENDC))
             self.connected = False
+        # Handle Ctrl-C
+        signal.signal(signal.SIGINT, partial(handle_sigint, self))
     
     def connectToDaemon(self):
-        connectionDetails = {'hostname': 'localhost', 'port':8000}
         print("> Attemping to connect to Odin Daemon on {}:{} .. ".format(connectionDetails['hostname'], connectionDetails['port']),end='')
         try:
             self.socket.connect((connectionDetails['hostname'], connectionDetails['port']))
@@ -70,10 +82,16 @@ class Session:
                 self.connected = False
                 return
 
+        if len(self.operations) <= 0:
+            print("{}There is no point in executing the session - it contains zero operations.{}".format(PrintColors.FAIL, PrintColors.ENDC))
+            return
+
+        # Rename output variablee to result
+        self.variables.getVariable(self.operations[-1].outputvar).name = 'result'
+
         toSend = bytearray()
         toSend.extend(map(ord, self.toJson()))
         # Do the sending
-        # self.connectToDaemon()
         self.sendToDaemon(toSend)
 
     def print(self):
@@ -93,5 +111,13 @@ class Session:
             json += ';'
         return json
 
+    def close(self):
+        if self.connected:
+            toSend = bytearray()
+            toSend.extend(map(ord, quit_message))
+            self.socket.send(toSend)
+        self.socket.close()
+
+    
 
     

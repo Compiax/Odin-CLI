@@ -40,7 +40,7 @@ class Variable():
         return  json_data
 
     def __str__(self):
-        return "Variable: " + self.name
+        return self.name
 
 
 

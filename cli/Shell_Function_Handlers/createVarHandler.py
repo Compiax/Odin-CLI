@@ -34,6 +34,10 @@ class CreateVarHandler():
         if len(self.args) <= 1:
             valid = False
 
+        if str(self.args[0]) == "result":
+            print(PrintColors.FAIL + "ERROR: 'result' is a reserved keyword." + PrintColors.ENDC)
+            return False
+
         if not str(self.args[0]).isalpha():
             valid = False
 

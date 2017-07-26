@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
 import sys
-import logging
 import shell
 
 def start_shell():
     " Starts the shell interface "
-    logging.debug("Starting shell")
     prompt = shell.OdinShell()
     prompt.prompt = '> '
     prompt.cmdloop('> Welcome to the Odin CLI Shell...')
@@ -16,7 +14,9 @@ def start_package_stuff():
 
 # Do the actual things
 if __name__ == '__main__':
-    logging.basicConfig(stream=sys.stderr, level=logging.DEBUG) # Set logging level
+    # By default, start the shell
+    if len(sys.argv) == 1:
+        start_shell()
     if sys.argv[1] == "shell":
         start_shell()
 

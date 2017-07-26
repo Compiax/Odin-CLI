@@ -33,6 +33,7 @@ def validate_arguments_and_add(session, args):
             for operand in operands:
                 if not (session.variables.containsVariable(operand)):
                     print("Error: {}Variable {} does not exist.{}".format(PrintColors.FAIL,operand,PrintColors.ENDC))
+                    return
             op = add_operation(session, operation_name, operands)
             print("{}Added {} operation between {} and {}, outputting to {}{}".format(PrintColors.OKBLUE,
                                                                                       op.operation_name.upper(),

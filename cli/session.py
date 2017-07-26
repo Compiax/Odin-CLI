@@ -93,6 +93,7 @@ class Session:
         toSend.extend(map(ord, self.toJson()))
         # Do the sending
         self.sendToDaemon(toSend)
+        self.waitForResponse()
 
     def print(self):
         print("Variables:")
@@ -118,6 +119,12 @@ class Session:
             self.socket.send(toSend)
         self.socket.close()
 
+    def waitForResponse(self):
+        print("{}Waiting for response from Daemon...{}".format(PrintColors.OKBLUE, PrintColors.ENDC))
+        recvd = ""
+        while len(recvd) == 0:
+            recvd = self.socket.recv(4096)
+        print("{}Received response.{}".format(PrintColors.OKBLUE, PrintColors.ENDC))
     
 
     

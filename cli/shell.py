@@ -171,4 +171,5 @@ class OdinShell(Cmd):
     def do_quit(self, args):
         """Quits the program."""
         print("Quitting the Odin CLI Shell..")
+        self.session.close()
         raise SystemExit

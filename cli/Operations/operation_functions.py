@@ -30,11 +30,13 @@ def validate_arguments_and_add(session, args):
     # Basic operation
     if (operation_name in ["sum", "mul", "sub", "div"]):
         if (len(operands) == 3):
+            operandItems = []
             for operand in operands:
                 if not (session.variables.containsVariable(operand)):
                     print("Error: {}Variable {} does not exist.{}".format(PrintColors.FAIL,operand,PrintColors.ENDC))
                     return
-            op = add_operation(session, operation_name, operands)
+                operandItems.append(session.variables.getVariable(operand))
+            op = add_operation(session, operation_name, operandItems)
             print("{}Added {} operation between {} and {}, outputting to {}{}".format(PrintColors.OKBLUE,
                                                                                       op.operation_name.upper(),
                                                                                       op.operands[0],

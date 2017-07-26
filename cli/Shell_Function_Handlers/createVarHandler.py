@@ -45,12 +45,20 @@ class CreateVarHandler():
 
         if "--save" not in self.args:
             while index < len(self.args):
+                if self.args[index] == "0":
+                    print(PrintColors.FAIL + "ERROR: A var can not contain a dimension of zero." + PrintColors.ENDC)
+                    return False
+
                 if not self.args[index].isdigit():
                     valid = False
                     break
                 index += 1
         else:
             while index < len(self.args) - 1:
+                if self.args[index] == "0":
+                    print(PrintColors.FAIL + "ERROR: A var can not contain a dimension of zero." + PrintColors.ENDC)
+                    return False
+                
                 if not str(self.args[index]).isdigit():
                     valid = False
                     break

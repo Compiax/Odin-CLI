@@ -141,16 +141,28 @@ class OdinShell(Cmd):
             else:
                 print(PrintColors.FAIL + "ERROR: No such variable exists" + PrintColors.ENDC)
 
+    def do_execute(self, args):
+        """
+        Executes the session.
+        """
+        self.session.execute()
+
+    def do_do(self, args):
+        """
+        Performs an operation
+        """
+        Operations.validate_arguments_and_add(self.session,args)
+
     ##########################################################
     #   Write/reading files (export/import)
     ###########################################################
     def do_export(self, args):
         """Exports the current variables to a file."""
-        print ("'execute' called with arguments {}".format(repr(args)))
+        print ("'export' called with arguments {}".format(repr(args)))
 
     def do_import(self, args):
         """Imports the current variables from a file."""
-        print ("'execute' called with arguments {}".format(repr(args)))
+        print ("'import' called with arguments {}".format(repr(args)))
 
     ###########################################################
     #   Quit

@@ -88,7 +88,10 @@ class Session:
         json = '\n'.join(map(lambda x: x.convertToJson(),self.variables.list))
         if len(json) > 0:
             json += '\n'  # Could also add some other separater between the variables and the commands
-        json += '\n'.join(map(str,self.operations))
+        json += '\n;'.join(map(str,self.operations))
+        print(len(self.operations))
+        if len(self.operations) > 0:
+            json += ';'
         return json
 
 

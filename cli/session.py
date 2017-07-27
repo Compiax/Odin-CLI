@@ -12,20 +12,22 @@ import sys
 from functools import partial
 
 quit_message = "QUIT"
-connectionDetails = {'hostname': 'localhost', 'port':8000}
+
 
 def handle_sigint(session,signal, frame):
         print("Closing CLI..")
         if (session.connected):
             session.close()
         sys.exit(0)
+        
 class Session:
     """
     A Session object will contain the variables and operations of the current session,
     as well as the components that can be used.
     """    
 
-    def __init__(self):
+    def __init__(self, _connectionDetails):
+        self.connectionDetails = _connectionDetails
         self.variables = VariableHandler()
         self.operations = []
         self.components = []
@@ -40,9 +42,9 @@ class Session:
         signal.signal(signal.SIGINT, partial(handle_sigint, self))
     
     def connectToDaemon(self):
-        print("> Attemping to connect to Odin Daemon on {}:{} .. ".format(connectionDetails['hostname'], connectionDetails['port']),end='')
+        print("> Attemping to connect to Odin Daemon on {}:{} .. ".format(self.connectionDetails['hostname'], self.connectionDetails['port']),end='')
         try:
-            self.socket.connect((connectionDetails['hostname'], connectionDetails['port']))
+            self.socket.connect((self.connectionDetails['hostname'], self.connectionDetails['port']))
         except ConnectionRefusedError:            
             return False
         return True

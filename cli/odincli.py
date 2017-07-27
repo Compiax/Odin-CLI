@@ -1,12 +1,7 @@
 #!/usr/bin/env python3
 import sys
 import shell
-
-def start_shell():
-    " Starts the shell interface "
-    prompt = shell.OdinShell()
-    prompt.prompt = '> '
-    prompt.cmdloop('> Welcome to the Odin CLI Shell...')
+import argparse
 
 def start_package_stuff():
     " A placeholder for the package manager."
@@ -14,11 +9,14 @@ def start_package_stuff():
 
 # Do the actual things
 if __name__ == '__main__':
-    # By default, start the shell
-    if len(sys.argv) == 1:
-        start_shell()
-    if sys.argv[1] == "shell":
-        start_shell()
+    # Get arguments
+    parser = argparse.ArgumentParser(description='Odin Command Line Interface')
+    parser.add_argument('-port', action="store", type=int, dest="port", default=8000, help="Set the port the Daemon is on. Default: 8000")
+    parser.add_argument('-host', action="store", dest="hostname", default="localhost", help="Set the host the Daemon is on. Default: localhost")
+    results = parser.parse_args()
 
-    elif sys.argv[1] == "package":
-        start_package_stuff()
+    # By default, start the shell
+    connectionDetails = {'hostname': results.hostname, 'port': results.port}
+    prompt = shell.OdinShell(connectionDetails)
+    prompt.prompt = '> '
+    prompt.cmdloop('> Welcome to the Odin CLI Shell...')

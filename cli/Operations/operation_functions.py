@@ -46,7 +46,28 @@ def validate_arguments_and_add(session, args):
         else:
             error("Incorrect number of arguments passed to {}, should be 2.".format(operation_name))
     else:
-        print("{}{} is not a valid operation. Do you have that component installed?{}".format(PrintColors.OKBLUE,
+        component = next((x for x in session.components if x.component_name == operation_name), None)
+        if not component is None:
+            # Component is installed
+            if component.num_operands == (len(operands) - 1):
+                print("Correct number of operands")
+                operandItems = []
+                for operand in operands:
+                    if not (session.variables.containsVariable(operand)):
+                        print("Error: {}Variable {} does not exist.{}".format(PrintColors.FAIL,operand,PrintColors.ENDC))
+                        return
+                    operandItems.append(session.variables.getVariable(operand))
+                op = add_operation(session, operation_name, operandItems)
+                print("{}Added {} operation between {} and {}, outputting to {}{}".format(PrintColors.OKBLUE,
+                                                                                      op.operation_name.upper(),
+                                                                                      op.operands[0],
+                                                                                      op.operands[1],
+                                                                                      op.outputvar,
+                                                                                      PrintColors.ENDC))
+            else:
+                print("Not correct number of operands")
+        else:
+            print("{}{} is not a valid operation. Do you have that component installed?{}".format(PrintColors.OKBLUE,
                                                                                               operation_name,
                                                                                               PrintColors.ENDC))
 

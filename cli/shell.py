@@ -33,13 +33,15 @@ import Components
 
 class OdinShell(Cmd):
     
-    session = Session()
-    session.components = Components.initialize_components()
-    print("> {}Loaded components: {}{}".format(PrintColors.OKBLUE,', '.join(map(str,session.components)),PrintColors.ENDC))
-
+    
     ###########################################################
     #   Createing/setting vars
     ###########################################################
+    def __init__(self, connectionDetails):
+        super(OdinShell, self).__init__()
+        session = Session(connectionDetails)
+        print("> {}Loaded components: {}{}".format(PrintColors.OKBLUE,', '.join(map(str,session.components)),PrintColors.ENDC))
+        session.components = Components.initialize_components()
 
     def do_var(self, args):
         """

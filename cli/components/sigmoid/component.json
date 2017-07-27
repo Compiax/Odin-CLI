@@ -1,0 +1,6 @@
+{
+    "name": "sigmoid",
+    "inputs": {
+        "amount": 3
+    }
+}

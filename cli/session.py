@@ -124,7 +124,10 @@ class Session:
         recvd = ""
         while len(recvd) == 0:
             recvd = self.socket.recv(4096)
-        print("{}Received response.{}".format(PrintColors.OKBLUE, PrintColors.ENDC))
+        print("{}Received response: {}{}".format(PrintColors.OKBLUE, recvd,PrintColors.ENDC))
+
+    def getComponent(self, component_name):
+
     
 
     

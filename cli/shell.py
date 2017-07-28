@@ -39,9 +39,9 @@ class OdinShell(Cmd):
     ###########################################################
     def __init__(self, connectionDetails):
         super(OdinShell, self).__init__()
-        session = Session(connectionDetails)
-        print("> {}Loaded components: {}{}".format(PrintColors.OKBLUE,', '.join(map(str,session.components)),PrintColors.ENDC))
-        session.components = Components.initialize_components()
+        self.session = Session(connectionDetails)
+        print("> {}Loaded components: {}{}".format(PrintColors.OKBLUE,', '.join(map(str,self.session.components)),PrintColors.ENDC))
+        self.session.components = Components.initialize_components()
 
     def do_var(self, args):
         """

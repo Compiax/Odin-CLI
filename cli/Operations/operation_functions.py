@@ -50,7 +50,6 @@ def validate_arguments_and_add(session, args):
         if not component is None:
             # Component is installed
             if component.num_operands == (len(operands) - 1):
-                print("Correct number of operands")
                 operandItems = []
                 for operand in operands:
                     if not (session.variables.containsVariable(operand)):

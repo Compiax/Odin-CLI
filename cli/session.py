@@ -126,4 +126,10 @@ class Session:
         recvd = ""
         while len(recvd) == 0:
             recvd = self.socket.recv(4096)
-        print("{}Received response: {}{}".format(PrintColors.OKBLUE, recvd, PrintColors.ENDC))
+        result = json.loads(recvd.decode("utf-8"))
+        print("{}Received response: {}{}".format(PrintColors.OKBLUE, result['values'], PrintColors.ENDC))
+        self.resetSession()
+
+    def resetSession(self):
+        self.operations = []
+        self.variables.deleteAll()

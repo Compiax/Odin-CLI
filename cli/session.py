@@ -50,6 +50,7 @@ class Session:
         return True
 
     def sendToDaemon(self, data):
+        print(data)
         amountToSend = len(data)
         if (amountToSend == 0):
             print("> {}Nothing to send to the Daemon - session is empty{}".format(PrintColors.FAIL, PrintColors.ENDC))

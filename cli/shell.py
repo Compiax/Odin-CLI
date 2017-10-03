@@ -40,8 +40,8 @@ class OdinShell(Cmd):
     def __init__(self, connectionDetails):
         super(OdinShell, self).__init__()
         self.session = Session(connectionDetails)
-        print("> {}Loaded components: {}{}".format(PrintColors.OKBLUE,', '.join(map(str,self.session.components)),PrintColors.ENDC))
         self.session.components = Components.initialize_components()
+        print("> {}Loaded components: {}{}".format(PrintColors.OKBLUE,', '.join(map(str,self.session.components)),PrintColors.ENDC))
 
     def do_var(self, args):
         """

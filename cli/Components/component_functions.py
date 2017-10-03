@@ -15,8 +15,8 @@ def initialize_components():
     Finds all components in some directory.
     @TODO: Clean this function  up. It's disgusting
     """
+    components = []
     for root, dirs, files in os.walk("./components", topdown=False):
-        components = []
         for name in dirs:
             path = os.path.join(root, name)
             path = os.path.join(path, "component.json")

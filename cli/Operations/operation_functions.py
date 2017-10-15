@@ -28,7 +28,7 @@ def validate_arguments_and_add(session, args):
     operands = args[1:]
 
     # Basic operation
-    if (operation_name in ["sum", "mul", "sub", "div"]):
+    if (operation_name in ["sum", "mul", "sub", "div", "mult"]):
         if (len(operands) == 3):
             operandItems = []
             for operand in operands:

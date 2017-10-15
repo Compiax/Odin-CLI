@@ -19,12 +19,12 @@ def handle_sigint(session,signal, frame):
         if (session.connected):
             session.close()
         sys.exit(0)
-        
+
 class Session:
     """
     A Session object will contain the variables and operations of the current session,
     as well as the components that can be used.
-    """    
+    """
 
     def __init__(self, _connectionDetails):
         self.connectionDetails = _connectionDetails
@@ -40,17 +40,17 @@ class Session:
             self.connected = False
         # Handle Ctrl-C
         signal.signal(signal.SIGINT, partial(handle_sigint, self))
-    
+
     def connectToDaemon(self):
         print("> Attemping to connect to Odin Daemon on {}:{} .. ".format(self.connectionDetails['hostname'], self.connectionDetails['port']),end='')
         try:
             self.socket.connect((self.connectionDetails['hostname'], self.connectionDetails['port']))
-        except ConnectionRefusedError:            
+        except ConnectionRefusedError:
             return False
         return True
 
     def sendToDaemon(self, data):
-        print(data)
+        # print(data)
         amountToSend = len(data)
         if (amountToSend == 0):
             print("> {}Nothing to send to the Daemon - session is empty{}".format(PrintColors.FAIL, PrintColors.ENDC))
@@ -105,7 +105,7 @@ class Session:
         print("Operations:")
         for op in self.operations:
             print("- {}".format(op))
-    
+
     def toJson(self):
         json = '\n'.join(map(lambda x: x.convertToJson(),self.variables.list))
         if len(json) > 0:
@@ -128,7 +128,11 @@ class Session:
         while len(recvd) == 0:
             recvd = self.socket.recv(4096)
         result = json.loads(recvd.decode("utf-8"))
-        print("{}Received response: {}{}".format(PrintColors.OKBLUE, result['values'], PrintColors.ENDC))
+        # print(result)
+        if 'errors' in result:
+            print("{}Error: {}, {}{}".format(PrintColors.FAIL, result['errors'][0]['status'], result['errors'][0]['details'], PrintColors.ENDC))
+        else:
+            print("{}Received response: {}{}".format(PrintColors.OKBLUE, result['values'], PrintColors.ENDC))
         self.resetSession()
 
     def resetSession(self):

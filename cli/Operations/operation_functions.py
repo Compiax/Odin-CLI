@@ -28,7 +28,7 @@ def validate_arguments_and_add(session, args):
     operands = args[1:]
 
     # Basic operation
-    if (operation_name in ["sum", "mul", "sub", "div", "mult"]):
+    if (operation_name in ["sum", "mul", "sub", "div", "mult", "div"]):
         if (len(operands) == 3):
             operandItems = []
             for operand in operands:
@@ -45,6 +45,22 @@ def validate_arguments_and_add(session, args):
                                                                                       PrintColors.ENDC))
         else:
             error("Incorrect number of arguments passed to {}, should be 2.".format(operation_name))
+    elif (operation_name in ["abs"]):
+        if (len(operands) == 2):
+            operandItems = []
+            for operand in operands:
+                if not (session.variables.containsVariable(operand)):
+                    print("Error: {}Variable {} does not exist.{}".format(PrintColors.FAIL,operand,PrintColors.ENDC))
+                    return
+                operandItems.append(session.variables.getVariable(operand))
+            op = add_operation(session, operation_name, operandItems)
+            print("{}Added {} operation between {}, outputting to {}{}".format(PrintColors.OKBLUE,
+                                                                                      op.operation_name.upper(),
+                                                                                      op.operands[0],
+                                                                                      op.outputvar,
+                                                                                      PrintColors.ENDC))
+        else:
+            error("Incorrect number of arguments passed to {}, should be 1.".format(operation_name))
     else:
         component = next((x for x in session.components if x.component_name == operation_name), None)
         if not component is None:

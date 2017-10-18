@@ -1,0 +1,6 @@
+{
+    "name": "transpose",
+    "inputs": {
+        "amount": 2
+    }
+}
